@@ -1,0 +1,23 @@
+[
+  {
+    "objectID": "ST558_HW3.html",
+    "href": "ST558_HW3.html",
+    "title": "ST_558_HW_3",
+    "section": "",
+    "text": "#Task 1 library(tidyverse) library(readr) library(dplyr) #1 # “../MyData.csv”\n#2 # R is good for all following task: # Read raw data in or connect to a database # Manipulate data as need # Subset # Create new variables # Summarize data to create meaningful insights # Modeling data to make inference or predict outcomes # Communicate our results via dashboards, documents, model files, etc.\n#3 # Git is a version control software # Github is an online hosting service for Git-based projects\n#4 # First, a tibble prints more nicely. It only shows the first few rows and columns that fit on the screen, # while a data.frame may print too much."
+  },
+  {
+    "objectID": "ST558_HW3.html#question-3",
+    "href": "ST558_HW3.html#question-3",
+    "title": "ST_558_HW_3",
+    "section": "Question 3",
+    "text": "Question 3\n#1. Read in the White Wine Excel file\nlibrary(readxl) white_wine &lt;- read_excel(“~/Desktop/ST 558/ST 558 HW3/white-wine.xlsx”, sheet = 1) white_wine\n#2. Rename columns using Sheet 2\nnew_names &lt;- read_excel(“~/Desktop/ST 558/ST 558 HW3/white-wine.xlsx”, sheet = 2)\ncolnames(white_wine) &lt;- new_names[[1]]\n#3. Add type column for white wine\nlibrary(dplyr)\nwhite_wine &lt;- white_wine |&gt; mutate(type = “white”)\n#4. Read in the Red Wine CSV\nlibrary(readr) red_wine &lt;- read_delim(“~/Desktop/ST 558/ST 558 HW3/red-wine.csv”, delim = “;”, show_col_types = FALSE) colnames(red_wine) &lt;- new_names[[1]]\nred_wine &lt;- red_wine |&gt; mutate(type = “red”)\n#5. Combine both datasets\nwine &lt;- dplyr::bind_rows(white_wine, red_wine)\n#6-9. Combined data object to filter the data\nwine |&gt; # Filter high quality and reasonable alcohol filter(quality &gt; 6.5 & alcohol &lt; 132) |&gt; # Sort highest quality to lowest arrange(desc(quality)) |&gt; # Select acid columns, alcohol, type, quality dplyr::select(contains(“acid”), alcohol, type, quality) |&gt; # Add mean and sd of alcohol for each quality level group_by(quality) |&gt; mutate( mean_alcohol = mean(alcohol), sd_alcohol = sd(alcohol) )"
+  },
+  {
+    "objectID": "ST558_HW3.html#question-4",
+    "href": "ST558_HW3.html#question-4",
+    "title": "ST_558_HW_3",
+    "section": "Question 4",
+    "text": "Question 4\n#1. Connect to the database and list all tables\ninstall.packages(“RSQLite”)\nlibrary(DBI)\ncon &lt;- dbConnect(RSQLite::SQLite(), “~/Desktop/ST 558/ST 558 HW3/lahman.db”)\ndbListTables(con)\n#2. Using the tbl() function and dplyr to return all of the data\nlibrary(dbplyr)\ntbl(con, “Teams”) |&gt; filter(yearID == 2015 ) |&gt; collect()\n#3. Using the sql() function\ntbl(con, sql( “SELECT * FROM Teams WHERE yearID == 2015”)) |&gt; collect()\n#4. Inducted players only\nhof &lt;- tbl(con, sql(” SELECT playerID, yearID, category From HallOfFame WHERE inducted = ‘Y’ “)) |&gt; collect() hof\n#5. Add nameFirst and nameLast from People\nhof_names &lt;- tbl(con, sql(” SELECT h.playerID, h.yearID, h.category, p.nameFirst, p.nameLast From HallOfFame h JOIN People p ON h.playerID = p.playerID WHERE h.inducted = ‘Y’ “)) |&gt; collect() hof_names\n#6. Managers win/loss records and win percentage\nmanagers &lt;- tbl(con, “Managers”) |&gt; select(playerID, G, W, L) |&gt; group_by(playerID) |&gt; summarize(G_managed = sum(G, na.rm = TRUE), Total_W = sum(W, na.rm = TRUE), Total_L = sum(L, na.rm = TRUE)) |&gt; collect() |&gt; mutate(win_pct = Total_W/G_managed) |&gt; arrange(desc(win_pct)) managers\n#7. Join two previous table\nhof_names |&gt; inner_join(managers, by = “playerID”)"
+  }
+]
