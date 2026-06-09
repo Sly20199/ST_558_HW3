@@ -381,9 +381,10 @@ cols(
 </div>
 <p><strong>#2. Rename columns using Sheet 2</strong></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>new_names <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"~/Desktop/ST 558/ST 558 HW3/white-wine.xlsx"</span>, <span class="at">sheet =</span> <span class="dv">2</span>)</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(white_wine) <span class="ot">&lt;-</span> new_names[[<span class="dv">1</span>]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>new_names <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"~/Desktop/ST 558/ST 558 HW3/white-wine.xlsx"</span>,</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">sheet =</span> <span class="dv">2</span>)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(white_wine) <span class="ot">&lt;-</span> new_names[[<span class="dv">1</span>]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><strong>#3. Add type column for white wine</strong></p>
 <div class="cell">

@@ -86,7 +86,7 @@ glass_dt3<-glass_dt2 %>%
 
 ```
 
-# Task 2- Quetsion about yeast data
+# Task 2- Question about yeast data
 
 **#1.Read glass data into R directly from the URL**
 
